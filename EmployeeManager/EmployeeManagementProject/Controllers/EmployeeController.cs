@@ -23,7 +23,7 @@ namespace EmployeeManagementProject.Controllers
         /// <summary>
         /// Interface for manager
         /// </summary>
-        private readonly IEmployeeManager _manager;
+        private IEmployeeManager _manager;
 
         /// <summary>
         /// constructor for employee
@@ -31,7 +31,7 @@ namespace EmployeeManagementProject.Controllers
         /// <param name="manager"></param>
         public EmployeeController(IEmployeeManager manager)
         {
-            _manager = manager;
+            this._manager = manager;
         }
 
         /// <summary>
@@ -58,6 +58,25 @@ namespace EmployeeManagementProject.Controllers
             }
 
             return this.BadRequest("Not registered");
+        }
+
+        /// <summary>
+        /// Login method
+        /// </summary>
+        /// <param name="id">id as input</param>
+        /// <param name="mobile">mobile number as input</param>
+        /// <returns>return action result</returns>
+        [HttpPost]
+        [Route("api/login")]
+        public ActionResult Login(int id, string mobile)
+        {
+            this.response = this._manager.Login(id, mobile);
+            if (this.response)
+            {
+                return this.Ok("Logged in successfully");
+            }
+
+            return this.BadRequest("Not Logged in");
         }
     }
 }

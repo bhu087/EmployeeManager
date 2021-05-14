@@ -70,5 +70,39 @@ namespace Repository
                 return false;
             }
         }
+
+        /// <summary>
+        /// Login method
+        /// </summary>
+        /// <param name="id">input as Id</param>
+        /// <param name="mobile">input as mobile</param>
+        /// <returns>returns boolean result</returns>
+        public bool Login(int id, string mobile)
+        {
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(conString))
+                {
+                    SqlCommand command = new SqlCommand("spEmployeeLogin", connection);
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("EmployeeID", id);
+                    connection.Open();
+                    SqlDataReader reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        if (mobile.ToString().Equals(reader["Mobile"].ToString()))
+                        {
+                            return true;
+                        }
+                    }
+
+                    return false;
+                }
+            }
+            catch
+            {
+                return false;
+            }
+        }
     }
 }

@@ -26,6 +26,17 @@ namespace Manager
         }
 
         /// <summary>
+        /// Login method
+        /// </summary>
+        /// <param name="id">input as id</param>
+        /// <param name="mobile">input as mobile number</param>
+        /// <returns>returns boolean value</returns>
+        public bool Login(int id, string mobile)
+        {
+            return this.repository.Login(id, mobile);
+        }
+
+        /// <summary>
         /// Register method
         /// </summary>
         /// <param name="employee">employee model as parameter</param>
@@ -35,5 +46,4 @@ namespace Manager
             return this.repository.Register(employee);
         }
     }
-
 }

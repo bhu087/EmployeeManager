@@ -19,5 +19,13 @@ namespace Repository
         /// <param name="employee">employee model is input parameter</param>
         /// <returns>returns boolean result</returns>
         bool Register(EmployeeModel employee);
+
+        /// <summary>
+        /// Login repository
+        /// </summary>
+        /// <param name="id">id is the input parameter</param>
+        /// <param name="mobile">mobile is the input parameter</param>
+        /// <returns>returns boolean result</returns>
+        bool Login(int id, string mobile);
     }
 }
