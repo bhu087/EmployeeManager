@@ -138,5 +138,35 @@ namespace Repository
                 return false;
             }
         }
+
+        /// <summary>
+        /// Delete method
+        /// </summary>
+        /// <param name="id">id as input</param>
+        /// <returns>returns boolean result</returns>
+        public bool Delete(int id)
+        {
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(conString))
+                {
+                    SqlCommand command = new SqlCommand("spDeleteEmployee", connection);
+                    command.CommandType = CommandType.StoredProcedure;
+                    connection.Open();
+                    command.Parameters.AddWithValue("EmployeeID", id);
+                    var result = command.ExecuteNonQuery();
+                    if (result == 1)
+                    {
+                        return true;
+                    }
+
+                    return false;
+                }
+            }
+            catch
+            {
+                return false;
+            }
+        }
     }
 }

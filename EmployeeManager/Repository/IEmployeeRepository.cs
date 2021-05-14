@@ -34,5 +34,12 @@ namespace Repository
         /// <param name="employeeModel">employee model is input parameter</param>
         /// <returns>returns boolean result</returns>
         bool Update(EmployeeModel employeeModel);
+
+        /// <summary>
+        /// Delete repository
+        /// </summary>
+        /// <param name="id">id is the input parameter</param>
+        /// <returns>returns boolean result</returns>
+        bool Delete(int id);
     }
 }

@@ -26,6 +26,16 @@ namespace Manager
         }
 
         /// <summary>
+        /// Delete method
+        /// </summary>
+        /// <param name="id">id as input</param>
+        /// <returns>returns boolean value</returns>
+        public bool Delete(int id)
+        {
+            return this.repository.Delete(id);
+        }
+
+        /// <summary>
         /// Login method
         /// </summary>
         /// <param name="id">input as id</param>

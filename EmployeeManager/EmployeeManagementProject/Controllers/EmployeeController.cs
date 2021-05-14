@@ -96,5 +96,23 @@ namespace EmployeeManagementProject.Controllers
 
             return this.BadRequest("Not updated");
         }
+
+        /// <summary>
+        /// Delete method
+        /// </summary>
+        /// <param name="id">id as input</param>
+        /// <returns>returns action result</returns>
+        [HttpDelete]
+        [Route("api/delete")]
+        public ActionResult Delete(int id)
+        {
+            this.response = this._manager.Delete(id);
+            if (this.response)
+            {
+                return this.Ok("Deleted successfully");
+            }
+
+            return this.BadRequest("Employee not in DB");
+        }
     }
 }
