@@ -78,5 +78,23 @@ namespace EmployeeManagementProject.Controllers
 
             return this.BadRequest("Not Logged in");
         }
+
+        /// <summary>
+        /// Updates method
+        /// </summary>
+        /// <param name="employeeModel">employee model as input parameter</param>
+        /// <returns>returns action result</returns>
+        [HttpPut]
+        [Route("api/update")]
+        public ActionResult Update(EmployeeModel employeeModel)
+        {
+            this.response = this._manager.Update(employeeModel);
+            if (this.response)
+            {
+                return this.Ok("Updated");
+            }
+
+            return this.BadRequest("Not updated");
+        }
     }
 }

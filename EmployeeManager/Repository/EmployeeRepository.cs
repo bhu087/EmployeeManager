@@ -104,5 +104,39 @@ namespace Repository
                 return false;
             }
         }
+
+        /// <summary>
+        /// Update method
+        /// </summary>
+        /// <param name="employeeModel">employee model</param>
+        /// <returns>returns boolean result</returns>
+        public bool Update(EmployeeModel employeeModel)
+        {
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(conString))
+                {
+                    SqlCommand command1 = new SqlCommand("spUpdateEmployeeToTable", connection);
+                    command1.CommandType = CommandType.StoredProcedure;
+                    connection.Open();
+                    command1.Parameters.AddWithValue("EmployeeID", employeeModel.EmployeeID);
+                    command1.Parameters.AddWithValue("FirstName", employeeModel.FirstName);
+                    command1.Parameters.AddWithValue("LastName", employeeModel.LastName);
+                    command1.Parameters.AddWithValue("Mobile", employeeModel.Mobile);
+                    command1.Parameters.AddWithValue("Email", employeeModel.Email);
+                    command1.Parameters.AddWithValue("City", employeeModel.City);
+                    var result = command1.ExecuteNonQuery();
+                    if (result == 1)
+                    {
+                        return true;
+                    }
+                    return false;
+                }
+            }
+            catch
+            {
+                return false;
+            }
+        }
     }
 }

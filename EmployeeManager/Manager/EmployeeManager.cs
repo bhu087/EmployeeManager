@@ -45,5 +45,16 @@ namespace Manager
         {
             return this.repository.Register(employee);
         }
+
+        /// <summary>
+        /// Update method
+        /// </summary>
+        /// <param name="employeeModel">employee model as input</param>
+        /// <returns>returns boolean value</returns>
+        public bool Update(EmployeeModel employeeModel)
+        {
+            return this.repository.Update(employeeModel);
+        }
     }
+
 }

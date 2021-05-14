@@ -21,5 +21,12 @@ namespace Manager
         /// <param name="mobile">mobile is the input parameter</param>
         /// <returns>returns boolean result</returns>
         bool Login(int id, string mobile);
+
+        /// <summary>
+        /// Update manager
+        /// </summary>
+        /// <param name="employeeModel">employee model is input parameter</param>
+        /// <returns>returns boolean result</returns>
+        bool Update(EmployeeModel employeeModel);
     }
 }
