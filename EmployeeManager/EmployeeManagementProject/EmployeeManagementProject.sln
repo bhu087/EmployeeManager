@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Manager", "..\Manager\Manag
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repository", "..\Repository\Repository.csproj", "{9722D2C7-F703-4F51-884D-136FE6D4C366}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmployeeModel", "..\EmployeeModel\EmployeeModel.csproj", "{7AD6A97B-6E9F-4415-AECA-6E4E55F99BD1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmployeeModelLibrary", "..\EmployeeModel\EmployeeModelLibrary.csproj", "{7AD6A97B-6E9F-4415-AECA-6E4E55F99BD1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

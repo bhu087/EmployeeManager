@@ -6,11 +6,13 @@
 
 namespace EmployeeManagementProject
 {
+    using Manager;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
+    using Repository;
 
     /// <summary>
     /// Startup class
@@ -37,6 +39,8 @@ namespace EmployeeManagementProject
         /// <param name="services">services parameter</param>
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddTransient<IEmployeeManager, EmployeeManager>();
+            services.AddTransient<IEmployeeRepository, EmployeeRepository>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddSwaggerGen();
         }
