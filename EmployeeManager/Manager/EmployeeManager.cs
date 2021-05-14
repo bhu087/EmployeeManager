@@ -32,7 +32,8 @@ namespace Manager
         /// <returns>returns boolean value</returns>
         public bool Delete(int id)
         {
-            return this.repository.Delete(id);
+            bool result = this.repository.Delete(id);
+            return result;
         }
 
         /// <summary>

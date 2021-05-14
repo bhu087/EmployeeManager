@@ -33,7 +33,6 @@ namespace EmployeeManagementProject.Controllers
         {
             this._manager = manager;
         }
-
         /// <summary>
         /// Register method
         /// </summary>
