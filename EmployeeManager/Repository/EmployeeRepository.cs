@@ -140,6 +140,44 @@ namespace Repository
         }
 
         /// <summary>
+        /// Get all employees method
+        /// </summary>
+        /// <returns>returns list of employees</returns>
+        public IEnumerable<EmployeeModel> GetAllEmployees()
+        {
+            List<EmployeeModel> employeesList = new List<EmployeeModel>();
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(conString))
+                {
+                    SqlCommand command = new SqlCommand("spGetAllEmployees", connection);
+                    command.CommandType = CommandType.StoredProcedure;
+                    connection.Open();
+                    SqlDataReader reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        EmployeeModel employee = new EmployeeModel
+                        {
+                            EmployeeID = (int)reader["EmployeeID"],
+                            FirstName = reader["FirstName"].ToString(),
+                            LastName = reader["LastName"].ToString(),
+                            Mobile = reader["Mobile"].ToString(),
+                            Email = reader["Email"].ToString(),
+                            City = reader["City"].ToString()
+                        };
+                        employeesList.Add(employee);
+                    }
+                }
+
+                return employeesList;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
         /// Delete method
         /// </summary>
         /// <param name="id">id as input</param>

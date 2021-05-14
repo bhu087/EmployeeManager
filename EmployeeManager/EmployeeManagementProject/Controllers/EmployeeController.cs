@@ -98,6 +98,17 @@ namespace EmployeeManagementProject.Controllers
         }
 
         /// <summary>
+        /// Get all employees
+        /// </summary>
+        /// <returns>returns action results</returns>
+        [HttpGet]
+        [Route("api/getAll")]
+        public ActionResult GetAllEmployees()
+        {
+            return this.Ok(this._manager.GetAllEmployees());
+        }
+
+        /// <summary>
         /// Delete method
         /// </summary>
         /// <param name="id">id as input</param>

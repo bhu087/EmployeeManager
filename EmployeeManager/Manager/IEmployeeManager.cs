@@ -30,6 +30,12 @@ namespace Manager
         bool Update(EmployeeModel employeeModel);
 
         /// <summary>
+        /// Get all employees manager
+        /// </summary>
+        /// <returns>return all employees in the table</returns>
+        IEnumerable<EmployeeModel> GetAllEmployees();
+
+        /// <summary>
         /// Delete manager
         /// </summary>
         /// <param name="id">id is the input parameter</param>

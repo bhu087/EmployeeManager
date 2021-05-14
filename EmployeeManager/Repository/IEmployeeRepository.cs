@@ -36,6 +36,12 @@ namespace Repository
         bool Update(EmployeeModel employeeModel);
 
         /// <summary>
+        /// Get all employees repository
+        /// </summary>
+        /// <returns>return all employees in the table</returns>
+        IEnumerable<EmployeeModel> GetAllEmployees();
+
+        /// <summary>
         /// Delete repository
         /// </summary>
         /// <param name="id">id is the input parameter</param>

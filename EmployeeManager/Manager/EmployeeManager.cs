@@ -36,6 +36,15 @@ namespace Manager
         }
 
         /// <summary>
+        /// Get all employees method
+        /// </summary>
+        /// <returns>returns boolean result</returns>
+        public IEnumerable<EmployeeModel> GetAllEmployees()
+        {
+            return this.repository.GetAllEmployees();
+        }
+
+        /// <summary>
         /// Login method
         /// </summary>
         /// <param name="id">input as id</param>
