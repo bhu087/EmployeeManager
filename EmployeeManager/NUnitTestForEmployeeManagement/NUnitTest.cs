@@ -9,122 +9,118 @@ namespace NUnitTestForEmployeeManagement
 {
     public class Tests
     {
-        [SetUp]
-        public void Setup()
-        {
-            
-        }
         [Test]
         public void IfSendEmployeeModelWith_CorrectEntries_ReturnTrue()
         {
-            var service = new Mock<IConfiguration>();
-            var manager = new EmployeeRepository(service.Object);
-            var register = new EmployeeModel
-            {
-                FirstName = "Bhushan",
-                LastName = "Kumar",
-                Mobile = "91 9632112369",
-                Email = "bhush@gmail.com",
-                City = "Bengaluru"
+            var configure = new Mock<IConfiguration>();
+            var Employeerepo = new EmployeeRepository(configure.Object);
+            EmployeeModel emp = new EmployeeModel{
+                FirstName = "TestFirstName",
+                LastName = "TestLastName",
+                Mobile = "91 7894561230",
+                Email = "Bhush@gmail.com",
+                City = "Karnataka"
             };
-            bool result = manager.Register(register);
-            Assert.IsTrue(result);
+            EmployeeModel result = Employeerepo.Register(emp);
+            Assert.AreEqual(emp, result);
         }
         [Test]
-        public void IfSendEmployeeModelWith_InCorrectEntries_ReturnTrue()
+        public void IfSendEmployeeModelWith_InCorrectEntries_ReturnFalse()
         {
-            var service = new Mock<IConfiguration>();
-            var manager = new EmployeeRepository(service.Object);
-            var register = new EmployeeModel
+            var configure = new Mock<IConfiguration>();
+            var Employeerepo = new EmployeeRepository(configure.Object);
+            EmployeeModel emp = new EmployeeModel
             {
-                FirstName = "B",
-                LastName = "Kumar",
-                Mobile = "91 9632112369",
-                Email = "bhush@gmail.com",
-                City = "Bengaluru"
+                FirstName = "Te",
+                LastName = "TestLastName",
+                Mobile = "91 7894561230",
+                Email = "Bhush@gmail.com",
+                City = "Karnataka"
             };
-            bool result = manager.Register(register);
-            Assert.IsFalse(result);
+            EmployeeModel result = Employeerepo.Register(emp);
+            Assert.AreNotEqual(emp, result);
         }
         [Test]
         public void IfTryToLogin_WithValidInputs_ReturnTrue()
         {
-            var service = new Mock<IConfiguration>();
-            var manager = new EmployeeRepository(service.Object);
-            int EmployeeID = 3004;
+            var configure = new Mock<IConfiguration>();
+            var Employeerepo = new EmployeeRepository(configure.Object);
+            string email = "john@gmail.com";
             string mobile = "91 96547896547";
-            bool result = manager.Login(EmployeeID, mobile);
-            Assert.IsTrue(result);
+            EmployeeModel expected = new EmployeeModel { Email = email, Mobile = mobile};
+            EmployeeModel result = Employeerepo.Login(email, mobile);
+            Assert.AreEqual(expected, result);
         }
         [Test]
         public void IfTryToLogin_WithInvalidInputs_ReturnFalse()
         {
-            var service = new Mock<IConfiguration>();
-            var manager = new EmployeeRepository(service.Object);
-            int EmployeeID = 2004;
-            string mobile = "91 9632112111";
-            bool result = manager.Login(EmployeeID, mobile);
-            Assert.IsFalse(result);
+            var configure = new Mock<IConfiguration>();
+            var Employeerepo = new EmployeeRepository(configure.Object);
+            string email = "john@gmail.com";
+            string mobile = "91 96547891111";
+            EmployeeModel expected = new EmployeeModel { Email = email, Mobile = mobile };
+            EmployeeModel result = Employeerepo.Login(email, mobile);
+            Assert.AreNotEqual(expected, result);
         }
         [Test]
         public void GivenInputs_AreValidForUpdate_ThenReturnTrue()
         {
-            var service = new Mock<IConfiguration>();
-            var manager = new EmployeeRepository(service.Object);
-            var employee = new EmployeeModel
+            var configure = new Mock<IConfiguration>();
+            var Employeerepo = new EmployeeRepository(configure.Object);
+            EmployeeModel emp = new EmployeeModel
             {
-                EmployeeID = 3003,
-                FirstName = "Bhush",
-                LastName = "Kumar",
-                Mobile = "91 9632111234",
+                EmployeeID = 4005,
+                FirstName = "Test",
+                LastName = "TestLastName",
+                Mobile = "91 7894561230",
                 Email = "abc@gmail.com",
-                City = "Bengaluru"
+                City = "Karnataka"
             };
-            bool result = manager.Update(employee);
-            Assert.IsFalse(result);
+            EmployeeModel result = Employeerepo.Register(emp);
+            Assert.AreEqual(emp, result);
         }
         [Test]
         public void GivenInputs_AreInValidForUpdate_ThenReturnTrue()
         {
-            var service = new Mock<IConfiguration>();
-            var manager = new EmployeeRepository(service.Object);
-            var employee = new EmployeeModel
+            var configure = new Mock<IConfiguration>();
+            var Employeerepo = new EmployeeRepository(configure.Object);
+            EmployeeModel emp = new EmployeeModel
             {
-                EmployeeID = 4005,
-                FirstName = "Bhush",
-                LastName = "Kumar",
-                Mobile = "91 9632111234",
+                EmployeeID = 5000,
+                FirstName = "Test",
+                LastName = "TestLastName",
+                Mobile = "91 7894561230",
                 Email = "abc@gmail.com",
-                City = "Bengaluru"
+                City = "Karnataka"
             };
-            bool result = manager.Update(employee);
-            Assert.IsFalse(result);
+            EmployeeModel result = Employeerepo.Register(emp);
+            Assert.AreNotEqual(emp, result);
         }
         [Test]
-        public void GivenEmployeeID_IsEmployeePresent_ThenReturnTrue()
+        public void GivenEmployeeID_IsEmployeePresent_ForDeleteEmployee_ThenReturnTrue()
         {
-            var service = new Mock<IConfiguration>();
-            var manager = new EmployeeRepository(service.Object);
-            int id = 2004;
-            bool result = manager.Delete(id);
+            var configure = new Mock<IConfiguration>();
+            var Employeerepo = new EmployeeRepository(configure.Object);
+            int id = 3004;
+            bool result = Employeerepo.Delete(id);
             Assert.IsTrue(result);
         }
         [Test]
-        public void GivenEmployeeID_IsNotEmployeePresent_ThenReturnFalse()
+        public void GivenEmployeeID_IsNotEmployeePresent_ForDeleteEmployee_ThenReturnFalse()
         {
-            var service = new Mock<IConfiguration>();
-            var manager = new EmployeeRepository(service.Object);
-            int id = 5;
-            bool result = manager.Delete(id);
+            var configure = new Mock<IConfiguration>();
+            var Employeerepo = new EmployeeRepository(configure.Object);
+            int id = 3004;
+            bool result = Employeerepo.Delete(id);
             Assert.IsFalse(result);
         }
         [Test]
         public void GetAllEmployees_EmployeesPresent_GiveAllEntries_ReturnsTrue()
         {
-            var service = new Mock<IConfiguration>();
-            var manager = new EmployeeRepository(service.Object);
-            var result = manager.GetAllEmployees();
-            Assert.NotNull(result);
+            var configure = new Mock<IConfiguration>();
+            var Employeerepo = new EmployeeRepository(configure.Object);
+            var result = Employeerepo.GetAllEmployees();
+            Assert.IsNotNull(result);
         }
     }
 

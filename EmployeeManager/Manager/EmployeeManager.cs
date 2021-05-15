@@ -32,8 +32,15 @@ namespace Manager
         /// <returns>returns boolean value</returns>
         public bool Delete(int id)
         {
-            bool result = this.repository.Delete(id);
-            return result;
+            try
+            {
+                bool result = this.repository.Delete(id);
+                return result;
+            }
+            catch
+            {
+                throw new Exception();
+            }
         }
 
         /// <summary>
@@ -42,7 +49,14 @@ namespace Manager
         /// <returns>returns boolean result</returns>
         public IEnumerable<EmployeeModel> GetAllEmployees()
         {
-            return this.repository.GetAllEmployees();
+            try
+            {
+                return this.repository.GetAllEmployees();
+            }
+            catch
+            {
+                throw new Exception();
+            }
         }
 
         /// <summary>
@@ -51,9 +65,16 @@ namespace Manager
         /// <param name="id">input as id</param>
         /// <param name="mobile">input as mobile number</param>
         /// <returns>returns boolean value</returns>
-        public bool Login(int id, string mobile)
+        public EmployeeModel Login(string email, string mobile)
         {
-            return this.repository.Login(id, mobile);
+            try
+            {
+                return this.repository.Login(email, mobile);
+            }
+            catch
+            {
+                throw new Exception();
+            }
         }
 
         /// <summary>
@@ -61,9 +82,16 @@ namespace Manager
         /// </summary>
         /// <param name="employee">employee model as parameter</param>
         /// <returns>returns boolean result</returns>
-        public bool Register(EmployeeModel employee)
+        public EmployeeModel Register(EmployeeModel employee)
         {
-            return this.repository.Register(employee);
+            try
+            {
+                return this.repository.Register(employee);
+            }
+            catch
+            {
+                throw new Exception();
+            }
         }
 
         /// <summary>
@@ -71,9 +99,16 @@ namespace Manager
         /// </summary>
         /// <param name="employeeModel">employee model as input</param>
         /// <returns>returns boolean value</returns>
-        public bool Update(EmployeeModel employeeModel)
+        public EmployeeModel Update(EmployeeModel employeeModel)
         {
-            return this.repository.Update(employeeModel);
+            try
+            {
+                return this.repository.Update(employeeModel);
+            }
+            catch
+            {
+                throw new Exception();
+            }
         }
     }
 

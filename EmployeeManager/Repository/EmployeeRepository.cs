@@ -14,6 +14,7 @@ namespace Repository
     using System.Data.SqlClient;
 
     /// <summary>
+    /// 
     /// Employee repository class
     /// </summary>
     public class EmployeeRepository : IEmployeeRepository
@@ -25,7 +26,7 @@ namespace Repository
         /// <summary>
         /// connection string
         /// </summary>
-        private static string conString;
+        private string conString;
 
         /// <summary>
         /// constructor for Employee Repository
@@ -37,7 +38,8 @@ namespace Repository
         }
         public string ConnectionString()
         {
-            return conString = appConfig.GetConnectionString("DefaultConnection");
+            conString = appConfig["ConnectionStrings:DefaultConnection"];
+            return conString;
         }
 
         /// <summary>
@@ -45,12 +47,12 @@ namespace Repository
         /// </summary>
         /// <param name="employeeModel">Employee model</param>
         /// <returns>returns boolean result</returns>
-        public bool Register(EmployeeModel employeeModel)
+        public EmployeeModel Register(EmployeeModel employeeModel)
         {
             string conn = ConnectionString();
+            SqlConnection connection = new SqlConnection(conn);
             try
             {
-                SqlConnection connection = new SqlConnection(conn);
                 using (SqlCommand sqlCommand = new SqlCommand("spAddEmployeeToTable", connection))
                 {
                     sqlCommand.CommandType = CommandType.StoredProcedure;
@@ -63,15 +65,19 @@ namespace Repository
                     var result = sqlCommand.ExecuteNonQuery();
                     if (result == 1)
                     {
-                        return true;
+                        return employeeModel;
                     }
 
-                    return false;
+                    return null;
                 }
             }
             catch
             {
-                return false;
+                throw new Exception();
+            }
+            finally
+            {
+                connection.Close();
             }
         }
 
@@ -81,32 +87,39 @@ namespace Repository
         /// <param name="id">input as Id</param>
         /// <param name="mobile">input as mobile</param>
         /// <returns>returns boolean result</returns>
-        public bool Login(int id, string mobile)
+        public EmployeeModel Login(string email, string mobile)
         {
             string conn = ConnectionString();
+            SqlConnection connection = new SqlConnection(conn);
             try
             {
-                SqlConnection connection = new SqlConnection(conn);
+                EmployeeModel employeeModel = new EmployeeModel();
+                employeeModel.Email = email;
+                employeeModel.Mobile = mobile;
                 using (SqlCommand command = new SqlCommand("spEmployeeLogin", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
-                    command.Parameters.AddWithValue("EmployeeID", id);
+                    command.Parameters.AddWithValue("Email", email);
                     connection.Open();
                     SqlDataReader reader = command.ExecuteReader();
                     while (reader.Read())
                     {
                         if (mobile.ToString().Equals(reader["Mobile"].ToString()))
                         {
-                            return true;
+                            return employeeModel;
                         }
                     }
 
-                    return false;
+                    return null;
                 }
             }
-            catch
+            catch(Exception e)
             {
-                return false;
+                throw new Exception();
+            }
+            finally
+            {
+                connection.Close();
             }
         }
 
@@ -115,12 +128,12 @@ namespace Repository
         /// </summary>
         /// <param name="employeeModel">employee model</param>
         /// <returns>returns boolean result</returns>
-        public bool Update(EmployeeModel employeeModel)
+        public EmployeeModel Update(EmployeeModel employeeModel)
         {
             string conn = ConnectionString();
+            SqlConnection connection = new SqlConnection(conn);
             try
             {
-                SqlConnection connection = new SqlConnection(conn);
                 using (SqlCommand command1 = new SqlCommand("spUpdateEmployeeToTable", connection))
                 {
                     command1.CommandType = CommandType.StoredProcedure;
@@ -134,14 +147,18 @@ namespace Repository
                     var result = command1.ExecuteNonQuery();
                     if (result == 1)
                     {
-                        return true;
+                        return employeeModel;
                     }
-                    return false;
+                    return null;
                 }
             }
             catch
             {
-                return false;
+                throw new Exception();
+            }
+            finally
+            {
+                connection.Close();
             }
         }
 
@@ -153,9 +170,9 @@ namespace Repository
         {
             List<EmployeeModel> employeesList = new List<EmployeeModel>();
             string conn = ConnectionString();
+            SqlConnection connection = new SqlConnection(conn);
             try
             {
-                SqlConnection connection = new SqlConnection(conn);
                 SqlCommand command = new SqlCommand("spGetAllEmployees", connection);
                 command.CommandType = CommandType.StoredProcedure;
                 connection.Open();
@@ -174,14 +191,21 @@ namespace Repository
                         };
                         employeesList.Add(employee);
                     }
-
-                    return employeesList;
+                    if (employeesList.Count != 0)
+                    {
+                        return employeesList;
+                    }
+                    return null;
                 }    
                     
             }
             catch
             {
-                return null;
+                throw new Exception();
+            }
+            finally
+            {
+                connection.Close();
             }
         }
 
@@ -193,9 +217,9 @@ namespace Repository
         public bool Delete(int id)
         {
             string conn = ConnectionString();
+            SqlConnection connection = new SqlConnection(conn);
             try
             {
-                SqlConnection connection = new SqlConnection(conn);
                 using (SqlCommand command = new SqlCommand("spDeleteEmployee", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
@@ -211,9 +235,13 @@ namespace Repository
                     return false;
                 }  
             }
-            catch(Exception e)
+            catch
             {
-                return false;
+                throw new Exception();
+            }
+            finally
+            {
+                connection.Close();
             }
         }
     }

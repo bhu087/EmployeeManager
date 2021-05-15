@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\EmployeeManagementProject\EmployeeManagementProject.csproj" />
+    <ProjectReference Include="..\EmployeeModel\EmployeeModelLibrary.csproj" />
     <ProjectReference Include="..\Manager\Manager.csproj" />
   </ItemGroup>
 

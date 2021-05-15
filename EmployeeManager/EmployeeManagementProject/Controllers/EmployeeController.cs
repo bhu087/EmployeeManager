@@ -9,16 +9,20 @@ namespace EmployeeManagementProject.Controllers
     using EmployeeModelLibrary;
     using Manager;
     using Microsoft.AspNetCore.Mvc;
+    using System;
 
     /// <summary>
     /// Controller class for employee
     /// </summary>
+
+    [Route("api/[controller]")]
+    [ApiController]
     public class EmployeeController : ControllerBase
     {
         /// <summary>
         /// boolean variable for receiving result
         /// </summary>
-        private bool response;
+        private EmployeeModel response;
 
         /// <summary>
         /// Interface for manager
@@ -39,24 +43,31 @@ namespace EmployeeManagementProject.Controllers
         /// <param name="employeeModel">employee model as input parameters</param>
         /// <returns>return action results</returns>
         [HttpPost]
-        [Route("api/register")]
         public ActionResult Register(EmployeeModel employeeModel)
         {
-            EmployeeModel employee = new EmployeeModel
+            try
             {
-                FirstName = employeeModel.FirstName,
-                LastName = employeeModel.LastName,
-                Mobile = employeeModel.Mobile,
-                Email = employeeModel.Email,
-                City = employeeModel.City
-            };
-            this.response = this._manager.Register(employee);
-            if (this.response)
-            {
-                return this.Ok("Registered Successfully");
-            }
+                EmployeeModel employee = new EmployeeModel
+                {
+                    FirstName = employeeModel.FirstName,
+                    LastName = employeeModel.LastName,
+                    Mobile = employeeModel.Mobile,
+                    Email = employeeModel.Email,
+                    City = employeeModel.City
+                };
+                this.response = this._manager.Register(employee);
+                if (this.response != null)
+                {
+                    return this.Ok(new { Status = true, Message = "Registered in successfully", Data = this.response });
+                }
 
-            return this.BadRequest("Not registered");
+                return this.BadRequest(new { Status = false, Message = "Not registered", Data = this.response });
+
+            }
+            catch (Exception e)
+            {
+                return this.BadRequest(new { Status = false, Message = "Not registered", Data = e });
+            }
         }
 
         /// <summary>
@@ -66,16 +77,23 @@ namespace EmployeeManagementProject.Controllers
         /// <param name="mobile">mobile number as input</param>
         /// <returns>return action result</returns>
         [HttpPost]
-        [Route("api/login")]
-        public ActionResult Login(int id, string mobile)
+        [Route("login")]
+        public ActionResult Login(string email, string mobile)
         {
-            this.response = this._manager.Login(id, mobile);
-            if (this.response)
+            try
             {
-                return this.Ok("Logged in successfully");
-            }
+                this.response = this._manager.Login(email, mobile);
+                if (this.response != null)
+                {
+                    return this.Ok(new { Status = true, Message = "Logged in successfully", Data = this.response });
+                }
 
-            return this.BadRequest("Not Logged in");
+                return this.BadRequest(new { Status = false, Message = "Not Logged in", Data = this.response });
+            }
+            catch (Exception e)
+            {
+                return this.BadRequest(new { Status = false, Message = "Not registered", Data = e });
+            }
         }
 
         /// <summary>
@@ -84,16 +102,22 @@ namespace EmployeeManagementProject.Controllers
         /// <param name="employeeModel">employee model as input parameter</param>
         /// <returns>returns action result</returns>
         [HttpPut]
-        [Route("api/update")]
         public ActionResult Update(EmployeeModel employeeModel)
         {
-            this.response = this._manager.Update(employeeModel);
-            if (this.response)
+            try
             {
-                return this.Ok("Updated");
-            }
+                this.response = this._manager.Update(employeeModel);
+                if (this.response != null)
+                {
+                    return this.Ok(new { Status = true, Message = "Updated in successfully", Data = this.response });
+                }
 
-            return this.BadRequest("Not updated");
+                return this.BadRequest(new { Status = false, Message = "Update failed", Data = this.response });
+            }
+            catch (Exception e)
+            {
+                return this.BadRequest(new { Status = false, Message = "Not registered", Data = e });
+            }
         }
 
         /// <summary>
@@ -101,10 +125,21 @@ namespace EmployeeManagementProject.Controllers
         /// </summary>
         /// <returns>returns action results</returns>
         [HttpGet]
-        [Route("api/getAll")]
         public ActionResult GetAllEmployees()
         {
-            return this.Ok(this._manager.GetAllEmployees());
+            try
+            {
+                var result = this.Ok(this._manager.GetAllEmployees());
+                if (result != null)
+                {
+                    return this.Ok(new { Status = true, Message = "Employee List", Data = result });
+                }
+                return this.BadRequest(new { Status = false, Message = "Empty Employee List", Data = result });
+            }
+            catch (Exception e)
+            {
+                return this.BadRequest(new { Status = false, Message = "Employees Not present", Data = e });
+            }
         }
 
         /// <summary>
@@ -112,17 +147,24 @@ namespace EmployeeManagementProject.Controllers
         /// </summary>
         /// <param name="id">id as input</param>
         /// <returns>returns action result</returns>
-        [HttpDelete]
-        [Route("api/delete")]
+        [HttpDelete("{id}")]
         public ActionResult Delete(int id)
         {
-            this.response = this._manager.Delete(id);
-            if (this.response)
+            try
             {
-                return this.Ok("Deleted successfully");
-            }
+                bool result = this._manager.Delete(id);
+                if (result)
+                {
+                    return this.Ok(new { Status = true, Message = "Deleted", Data = this.response });
+                }
 
-            return this.BadRequest("Employee not in DB");
+                return this.BadRequest(new { Status = false, Message = "Employee Not present", Data = this.response });
+            }
+            
+            catch (Exception e)
+            {
+                return this.BadRequest(new { Status = false, Message = "Employee Not present", Data = e });
+            }
         }
     }
 }

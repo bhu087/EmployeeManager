@@ -18,7 +18,7 @@ namespace Repository
         /// </summary>
         /// <param name="employee">employee model is input parameter</param>
         /// <returns>returns boolean result</returns>
-        bool Register(EmployeeModel employee);
+        EmployeeModel Register(EmployeeModel employee);
 
         /// <summary>
         /// Login repository
@@ -26,14 +26,14 @@ namespace Repository
         /// <param name="id">id is the input parameter</param>
         /// <param name="mobile">mobile is the input parameter</param>
         /// <returns>returns boolean result</returns>
-        bool Login(int id, string mobile);
+        EmployeeModel Login(string email, string mobile);
 
         /// <summary>
         /// Update repository
         /// </summary>
         /// <param name="employeeModel">employee model is input parameter</param>
         /// <returns>returns boolean result</returns>
-        bool Update(EmployeeModel employeeModel);
+        EmployeeModel Update(EmployeeModel employeeModel);
 
         /// <summary>
         /// Get all employees repository

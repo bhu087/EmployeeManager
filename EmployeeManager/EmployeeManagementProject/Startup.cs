@@ -17,6 +17,7 @@ namespace EmployeeManagementProject
     /// <summary>
     /// Startup class
     /// </summary>
+
     public class Startup
     {
         /// <summary>
